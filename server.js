@@ -21,8 +21,8 @@ mongoose
   })
   .then(console.log("database connected"));
 
-const server = app.listen(3000, () => {
-  console.log("port started on 3000 ...");
+const server = app.listen(5000, () => {
+  console.log("port started on 5000 ...");
 });
 process.on("unhandledRejection", (err) => {
   console.log(err.name, err.message);
