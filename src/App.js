@@ -1,10 +1,8 @@
 import './App.css';
-
+import Routes from './Routes/routeManagement'
 function App() {
   return (
-    <div className="App">
-      <h1>HELLO WORLD</h1>
-    </div>
+      <Routes/>
   );
 }
 
