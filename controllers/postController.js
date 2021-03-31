@@ -2,7 +2,12 @@ const Post = require("../models/postModel");
 const Community = require("../models/communityModel");
 
 exports.getAllPosts = async (req, res) => {
-  const posts = await Post.find();
+  let filter = {};
+  if (req.params.slug) {
+    const community = Community.findOne({ slug: req.params.slug });
+    filter = { _community: (await community)._id };
+  }
+  const posts = await Post.find(filter);
 
   res.status(200).json({
     message: "successful",
@@ -12,6 +17,7 @@ exports.getAllPosts = async (req, res) => {
     },
   });
 };
+
 exports.CreateNewPost = async (req, res) => {
   if (!req.body._community) {
     const community = Community.findOne({ slug: req.params.slug });

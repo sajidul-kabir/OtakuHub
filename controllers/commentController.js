@@ -14,6 +14,7 @@ exports.getAllComments = async (req, res) => {
     },
   });
 };
+
 exports.CreateNewComment = async (req, res) => {
   if (!req.body._post) req.body._post = req.params.postId;
 
