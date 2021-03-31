@@ -12,6 +12,11 @@ const postSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    _community: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Community",
+      required: [true, "A post must belong to a community"],
+    },
     createdAt: {
       type: Date,
       default: Date.now,

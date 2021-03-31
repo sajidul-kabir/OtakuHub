@@ -1,4 +1,5 @@
 const Post = require("../models/postModel");
+const Community = require("../models/communityModel");
 
 exports.getAllPosts = async (req, res) => {
   const posts = await Post.find();
@@ -12,6 +13,11 @@ exports.getAllPosts = async (req, res) => {
   });
 };
 exports.CreateNewPost = async (req, res) => {
+  if (!req.body._community) {
+    const community = Community.findOne({ slug: req.params.slug });
+    req.body._community = (await community)._id;
+  }
+
   const newPost = await Post.create(req.body);
 
   res.status(201).json({
@@ -33,5 +39,13 @@ exports.getAPost = async (req, res) => {
     data: {
       post,
     },
+  });
+};
+
+exports.deleteAllPosts = async (req, res) => {
+  await Post.deleteMany();
+
+  res.status(200).json({
+    message: "successfully deleted",
   });
 };
