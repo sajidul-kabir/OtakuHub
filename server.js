@@ -1,5 +1,7 @@
-const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+dotenv.config()
+const mongoose = require("mongoose");
+
 
 process.on("uncaughtException", (err) => {
   console.log(err.name, err.message);
@@ -10,7 +12,7 @@ dotenv.config({ path: "./config.env" });
 
 const app = require("./app");
 
-const DB = process.env.DATABASE;
+const DB="mongodb+srv://skaDB:2018831024@cluster0.mjyjk.mongodb.net/OtakuHub?retryWrites=true&w=majorityDATABASE_PASSWORD=2018831024"
 
 mongoose
   .connect(DB, {

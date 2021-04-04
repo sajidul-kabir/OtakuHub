@@ -1,5 +1,5 @@
 const Community = require("../models/communityModel");
-
+const slug=require('slugify')
 exports.getAllCommunities = async (req, res) => {
   const communities = await Community.find();
 
@@ -24,7 +24,9 @@ exports.CreateNewCommunity = async (req, res) => {
 };
 
 exports.getACommunity = async (req, res) => {
-  const community = await Community.findOne({ slug: req.params.slug }).populate(
+  var param=slug(req.params.slug);
+  param=param.toLowerCase()
+  const community = await Community.findOne({ slug:param }).populate(
     {
       path: "posts",
       select: "title text -_community",
