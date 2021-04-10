@@ -51,7 +51,15 @@ exports.getAPost = async (req, res) => {
 exports.deleteAllPosts = async (req, res) => {
   await Post.deleteMany();
 
-  res.status(200).json({
+  res.status(204).json({
+    message: "successfully deleted",
+  });
+};
+
+exports.deleteAPost = async (req, res) => {
+  await Post.deleteOne({ _id: req.params.postId });
+
+  res.status(204).json({
     message: "successfully deleted",
   });
 };

@@ -1,6 +1,7 @@
 const express = require("express");
 const postController = require("../controllers/postController");
 const commentRouter = require("./commentRoutes");
+const authController = require("../controllers/authController");
 
 const router = express.Router({ mergeParams: true });
 
@@ -8,10 +9,21 @@ router.use("/:postId/comments", commentRouter); // Comment on a specific post
 
 router
   .route("/")
-  .get(postController.getAllPosts)
+  .get(authController.protectRoute, postController.getAllPosts)
   .post(postController.CreateNewPost)
-  .delete(postController.deleteAllPosts);
+  .delete(
+    authController.protectRoute,
+    authController.restrictTo("admin"), // Authentication and authorization middleware
+    postController.deleteAllPosts
+  );
 
-router.route("/:postId").get(postController.getAPost);
+router
+  .route("/:postId")
+  .get(postController.getAPost)
+  .delete(
+    authController.protectRoute,
+    authController.restrictTo("admin"),
+    postController.deleteAPost
+  );
 
 module.exports = router;
