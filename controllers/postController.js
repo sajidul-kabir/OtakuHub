@@ -23,6 +23,9 @@ exports.CreateNewPost = async (req, res) => {
     const community = Community.findOne({ slug: req.params.slug });
     req.body._community = (await community)._id;
   }
+  if(!req.body._user){
+    req.body._user = req.user._id;
+  }
 
   const newPost = await Post.create(req.body);
 

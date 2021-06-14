@@ -11,6 +11,20 @@ exports.getAllUsers = async (req, res) => {
   });
 };
 
+exports.getAUser = async (req, res) => {
+  const user = await User.findById(req.params.userId).populate({
+    path: "posts",
+    select: "title text -_user",
+  });
+
+  res.status(200).json({
+    message: "successful",
+    data: {
+      user,
+    },
+  });
+};
+
 exports.deleteAllUsers = async (req, res) => {
   await User.deleteMany();
 

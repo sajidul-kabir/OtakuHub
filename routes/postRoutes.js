@@ -9,8 +9,8 @@ router.use("/:postId/comments", commentRouter); // Comment on a specific post
 
 router
   .route("/")
-  .get(authController.protectRoute, postController.getAllPosts)
-  .post(postController.CreateNewPost)
+  .get(postController.getAllPosts)
+  .post(authController.protectRoute,postController.CreateNewPost)
   .delete(
     authController.protectRoute,
     authController.restrictTo("admin"), // Authentication and authorization middleware
