@@ -17,11 +17,12 @@ const postSchema = new mongoose.Schema(
       ref: "Community",
       required: [true, "A post must belong to a community"],
     },
-    _user:{
+    _user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
       required: [true, "A post must belong to a user"],
     },
+    upvotes: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
     createdAt: {
       type: Date,
       default: Date.now,

@@ -2,29 +2,31 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "A user must have a name"],
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "A user must have a name"],
+    },
+    email: {
+      type: String,
+      required: [true, "Email needed"],
+      unique: true,
+      lowercase: true,
+      validate: [validator.isEmail, "Email does not exist"],
+    },
+    role: {
+      type: String,
+      enum: ["admin", "user"],
+      default: "user",
+    },
+    upvotes: [{ type: mongoose.Schema.ObjectId, ref: "Post" }],
+    password: {
+      type: String,
+      required: [true, "A password is needed"],
+      minlength: [5, "A password must have atleast 5 characters"],
+    },
   },
-  email: {
-    type: String,
-    required: [true, "Email needed"],
-    unique: true,
-    lowercase: true,
-    validate: [validator.isEmail, "Email does not exist"],
-  },
-  role: {
-    type: String,
-    enum: ["admin", "user"],
-    default: "user",
-  },
-  password: {
-    type: String,
-    required: [true, "A password is needed"],
-    minlength: [5, "A password must have atleast 5 characters"],
-  },
-},
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
@@ -49,7 +51,6 @@ userSchema.virtual("posts", {
   foreignField: "_user",
   localField: "_id",
 });
-
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
