@@ -1,5 +1,6 @@
 const Post = require("../models/postModel");
 const Community = require("../models/communityModel");
+const User = require("../models/userModel");
 
 exports.getAllPosts = async (req, res) => {
   let filter = {};
@@ -23,7 +24,7 @@ exports.CreateNewPost = async (req, res) => {
     const community = Community.findOne({ slug: req.params.slug });
     req.body._community = (await community)._id;
   }
-  if(!req.body._user){
+  if (!req.body._user) {
     req.body._user = req.user._id;
   }
 
@@ -47,6 +48,43 @@ exports.getAPost = async (req, res) => {
     message: "successful",
     data: {
       post,
+    },
+  });
+};
+
+exports.upvoteAPost = async (req, res) => {
+  const postId = req.params.postId;
+  const userId = req.user._id;
+
+  const isUpvoted = req.user.upvotes && req.user.upvotes.includes(postId);
+
+  let option;
+  if (!isUpvoted) {
+    option = "$addToSet";
+  } else option = "$pull";
+
+  req.user = await User.findByIdAndUpdate(
+    userId,
+    {
+      [option]: { upvotes: postId },
+    },
+    { new: true }
+  );
+
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    {
+      [option]: { upvotes: userId },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({
+    message: "successful",
+    number_of_upvotes: post.upvotes.length,
+    data: {
+      post,
+      user: req.user,
     },
   });
 };
