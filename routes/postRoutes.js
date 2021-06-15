@@ -11,6 +11,11 @@ router.put(
   authController.protectRoute,
   postController.upvoteAPost
 );
+router.put(
+  "/:postId/downvote",
+  authController.protectRoute,
+  postController.downvoteAPost
+);
 
 router
   .route("/")

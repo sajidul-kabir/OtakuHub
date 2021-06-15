@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
     upvotes: [{ type: mongoose.Schema.ObjectId, ref: "Post" }],
+    downvotes: [{ type: mongoose.Schema.ObjectId, ref: "Post" }],
     password: {
       type: String,
       required: [true, "A password is needed"],

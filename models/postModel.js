@@ -23,6 +23,7 @@ const postSchema = new mongoose.Schema(
       required: [true, "A post must belong to a user"],
     },
     upvotes: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
+    downvotes: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
     createdAt: {
       type: Date,
       default: Date.now,
