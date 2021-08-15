@@ -1,10 +1,11 @@
 import React from 'react'
-import redo from './304-3049844_cool-luffy-wallpaper-one-piece-luffy.png'
 import classes from './community.css'
+const images=require.context('../../images',true)
 const community=(props)=>{
+    const community=images(`./${props.name}.jpg`).default
     return(
-        <div className={classes.image} >
-            <img className={classes.image__img} src={redo} alt="Bricks"/>
+        <div onClick={props.clicked} className={classes.image} >
+            <img className={classes.image__img} src={community} height="390px" alt={props.name}/>
             <div className={classes.image__overlay} >
                 <div className={classes.image__title} >{props.name}</div>
                 <p className={classes.author}>

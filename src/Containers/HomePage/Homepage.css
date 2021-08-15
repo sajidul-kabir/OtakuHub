@@ -3,6 +3,6 @@
     flex-flow: row wrap;
     width: 80%;
     margin: auto;
-    position: absolute;
-    left: 10%;
+    margin-left: 10%;
+    justify-content: center;
 }

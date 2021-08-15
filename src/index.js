@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createStore,combineReducers,applyMiddleware,compose} from 'redux'
 import {Provider} from 'react-redux'
-import CommunityStore from './Store/communityStore'
+import CommunityStore from './Store/communityReducer'
 import thunk from 'redux-thunk'
 const rootReducer=combineReducers({
   communityStore:CommunityStore,
